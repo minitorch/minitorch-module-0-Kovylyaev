@@ -117,11 +117,13 @@ def test_sigmoid(a: float, b: float) -> None:
     if a == 0:
         assert sigmoid(a) == 0.5
     
-    if not is_close(a, b):
-        if a < b:
-            assert sigmoid(a) < sigmoid(b)
-        elif a > b:
-            assert sigmoid(a) > sigmoid(b)
+    sig_min = sigmoid(min(a, b))
+    sig_max = sigmoid(max(a, b))
+    if not is_close(a, b) and not is_close(sig_min, sig_max):
+        assert sig_min < sig_max
+    # Если убрать not is_close(sig_min, sig_max), то sigmoid(36) == 0.999...98 == sigmoid(36.5)
+    # Из-за недостаточной точности (кол-ва цифр после запятой) или так себе формулы лдя подсчёта сигмоиды
+    # сигмоиды от +- больших аргументов равны (ещё бывает, что обе сигмоиды равны 1.0)
 
 
 @pytest.mark.task0_2

@@ -88,7 +88,7 @@ def sigmoid(x: float) -> float:
 
     for stability.
     """
-    return 1 / (1.0 + math.e**(-x)) if x >=0 else math.e**x / (1 + math.e**x)
+    return 1.0 / (1.0 + math.e**(-x)) if x >= 0 else math.e**x / (1.0 + math.e**x)
 
 
 def relu(x: float) -> float:
