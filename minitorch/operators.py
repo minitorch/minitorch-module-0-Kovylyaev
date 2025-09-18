@@ -36,62 +36,101 @@ from typing import Callable, Iterable
 
 # TODO: Implement for Task 0.1.
 
-def mul(a: float, b: float):
-    return a * b
+def mul(x: float, y: float) -> float:
+    "$f(x, y) = x * y$"
+    return x * y
 
 
-def add(a: float, b: float):
-    return a + b
+def id(x: float) -> float:
+    "$f(x) = x$"
+    return x
 
 
-def neg(a: float):
-    return -a
+def add(x: float, y: float) -> float:
+    "$f(x, y) = x + y$"
+    return x + y
 
 
-def max(a: float, b: float):
-    return a if a > b else b
+def neg(x: float) -> float:
+    "$f(x) = -x$"
+    return -x
 
-def id(a: float):
-    return a
 
-def lt(a: float, b: float):
-    return a < b
+def lt(x: float, y: float) -> float:
+    "$f(x) =$ 1.0 if x is less than y else 0.0"
+    return 1 if x < y else 0
 
-def eq(a: float, b: float):
-    return a == b
 
-def is_close(a: float, b: float):
-    return abs(a - b) < 1e-2
+def eq(x: float, y: float) -> float:
+    "$f(x) =$ 1.0 if x is equal to y else 0.0"
+    return 1 if x == y else 0
 
-def sigmoid(a: float):
-    return 1 / (1.0 + math.e**-a) if a >=0 else math.e**a / (1.0 + math.e**a)
 
-def relu(a: float):
-    return max(0, a)
+def max(x: float, y: float) -> float:
+    "$f(x) =$ x if x is greater than y else y"
+    return x if x > y else y
 
-def log_back(a: float, b: float):
-    return 1 / a * b
 
-def exp(a: float):
-    return math.e**a
+def is_close(x: float, y: float) -> float:
+    "$f(x) = |x - y| < 1e-2$"
+    return abs(x - y) < 1e-2
 
-def relu_back(a: float, b: float):
-    return (0 if a < 0 else 1) * b
 
-def inv(a: float):
-    return 1 / a
+def sigmoid(x: float) -> float:
+    r"""
+    $f(x) =  \frac{1.0}{(1.0 + e^{-x})}$
 
-def inv_back(a: float, b: float):
-    return -(a**2) * b
+    (See https://en.wikipedia.org/wiki/Sigmoid_function )
 
-def negList(a: float, b: float):
-    return a
+    Calculate as
 
-def addLists(a: float, b: float):
-    return a
+    $f(x) =  \frac{1.0}{(1.0 + e^{-x})}$ if x >=0 else $\frac{e^x}{(1.0 + e^{x})}$
 
-def prod(a: float, b: float):
-    return a
+    for stability.
+    """
+    return 1 / (1.0 + math.e**(-x)) if x >=0 else math.e**x / (1 + math.e**x)
+
+
+def relu(x: float) -> float:
+    """
+    $f(x) =$ x if x is greater than 0, else 0
+
+    (See https://en.wikipedia.org/wiki/Rectifier_(neural_networks) .)
+    """
+    return x if x > 0 else 0
+
+
+EPS = 1e-6
+
+
+def log(x: float) -> float:
+    "$f(x) = log(x)$"
+    return math.log(x + EPS)
+
+
+def exp(x: float) -> float:
+    "$f(x) = e^{x}$"
+    return math.exp(x)
+
+
+def log_back(x: float, d: float) -> float:
+    r"If $f = log$ as above, compute $d \times f'(x)$"
+    return 1 / x * d
+
+
+def inv(x: float) -> float:
+    "$f(x) = 1/x$"
+    return 1 / x
+
+
+def inv_back(x: float, d: float) -> float:
+    r"If $f(x) = 1/x$ compute $d \times f'(x)$"
+    return -(x**2) * d
+
+
+def relu_back(x: float, d: float) -> float:
+    r"If $f = relu$ compute $d \times f'(x)$"
+    return 0 if x < 0 else d
 
 
 # ## Task 0.3
@@ -111,3 +150,12 @@ def prod(a: float, b: float):
 
 
 # TODO: Implement for Task 0.3.
+
+def negList(a: float, b: float):
+    return a
+
+def addLists(a: float, b: float):
+    return a
+
+def prod(a: float, b: float):
+    return a
