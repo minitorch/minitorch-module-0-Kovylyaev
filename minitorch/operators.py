@@ -8,6 +8,8 @@ from typing import Callable, Iterable
 #
 # Implementation of a prelude of elementary functions.
 
+
+
 # Mathematical functions:
 # - mul
 # - id
