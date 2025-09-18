@@ -3,7 +3,7 @@
 import math
 
 # ## Task 0.1
-from typing import Callable, Iterable
+from typing import Callable, Iterable, List
 
 #
 # Implementation of a prelude of elementary functions.
@@ -151,11 +151,44 @@ def relu_back(x: float, d: float) -> float:
 
 # TODO: Implement for Task 0.3.
 
-def negList(a: float, b: float):
-    return a
+def map(l: Iterable, func: Callable) -> Iterable:
+    r"Higher-order function that applies a given function to each element of an iterable"
+    res = []
+    for el in l:
+        res.append(func(el))
+    return res
 
-def addLists(a: float, b: float):
-    return a
+def zipWith(l1: Iterable, l2: Iterable, func: Callable) -> Iterable:
+    r"Higher-order function that applies a given function to each element of an iterable"
+    res = []
+    for el1, el2 in zip(l1, l2):
+        res.append(func(el1, el2))
+    return res
 
-def prod(a: float, b: float):
-    return a
+def reduce(l: Iterable, func: Callable) -> float:
+    r"Higher-order function that applies a given function to each element of an iterable"
+    res = 0
+    first = True
+    for el in l:
+        if first:
+            first = False
+            res = el
+        else:
+            res = func(res, el)
+    return res
+
+def negList(l: List[float]):
+    r"Negate all elements in a list using map"
+    return map(l, neg)
+
+def addLists(l1: List[float], l2: List[float]):
+    r"Add corresponding elements from two lists using zipWith"
+    return zipWith(l1, l2, add)
+
+def sum(l: List[float]):
+    r"Sum all elements in a list using reduce"
+    return reduce(l, add)
+
+def prod(l: List[float]):
+    r"Calculate the product of all elements in a list using reduce"
+    return reduce(l, mul)
